@@ -87,6 +87,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+
+    // Pidiendo los permisos
     private void checkForPermission(){
 
         int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
@@ -95,12 +97,12 @@ public class MainActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSION_READ_EXTERNAL_MEMORY);
         }
     }
-
+    // Comprobamos si tenemos los permisos
     private boolean hasPermission(String permissionToCheck) {
         int permissionCheck = ContextCompat.checkSelfPermission(this, permissionToCheck);
         return (permissionCheck == PackageManager.PERMISSION_GRANTED);
     }
-
+    // Tomando el resultado de los permisos
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode) {
@@ -161,10 +163,12 @@ public class MainActivity extends AppCompatActivity {
         return values;
     }
 
+     //Preguntando si tenemos los permisos y si los tenemos cargamos las imagenes
     public List<String> getImagesPath() {
-        List<String> listOfAllImages = new ArrayList<String>();
+        List<String> listOfAllImages = new ArrayList<>();
 
         if (hasPermission(Manifest.permission.READ_EXTERNAL_STORAGE)) {
+            // Dando la ruta de acceso de las imagenes
             final String[] columns = {MediaStore.Images.Media.DATA, MediaStore.Images.Media._ID};
 
             Cursor cursor = getContentResolver()
@@ -184,6 +188,7 @@ public class MainActivity extends AppCompatActivity {
         return listOfAllImages;
     }
 
+    // Cuando dejamos al aplicacion en pause y la volvemos rescatar comprobamos sin hay nuevas imagenes en el dispositivo
     @Override
     protected void onResume() {
         super.onResume();
